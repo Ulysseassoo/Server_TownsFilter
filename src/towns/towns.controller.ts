@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { TownsService } from './towns.service';
 import { CreateTownDto } from './dto/create-town.dto';
@@ -23,6 +24,11 @@ export class TownsController {
   @Get()
   findAll() {
     return this.townsService.findAll();
+  }
+
+  @Get('search')
+  async findByFilter(@Query('nomCommune') nomCommune: string) {
+    return this.townsService.findByFilter(nomCommune);
   }
 
   @Get(':id')

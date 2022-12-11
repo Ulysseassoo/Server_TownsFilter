@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTownDto } from './dto/create-town.dto';
 import { UpdateTownDto } from './dto/update-town.dto';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, Like, Repository } from 'typeorm';
 import { TownsEntity } from './entities/town.entity';
 
 @Injectable()
@@ -20,7 +20,6 @@ export class TownsService {
     newTown.codeCommune = createTownDto.codeCommune;
     newTown.libelleAcheminement = createTownDto.libelleAcheminement;
 
-    // == saves the post to db ==
     await this._townsRepository.save(newTown);
     return newTown;
   }
@@ -31,6 +30,14 @@ export class TownsService {
         nomCommune: 'ASC',
       },
       take: 100,
+    });
+  }
+
+  async findByFilter(nomCommune: string) {
+    return await this._townsRepository.find({
+      where: {
+        nomCommune: Like(`${nomCommune}%`),
+      },
     });
   }
 
