@@ -38,6 +38,10 @@ export class TownsService {
       where: {
         nomCommune: Like(`${nomCommune}%`),
       },
+      order: {
+        nomCommune: 'ASC',
+      },
+      take: 100,
     });
   }
 
