@@ -26,7 +26,12 @@ export class TownsService {
   }
 
   async findAll() {
-    return await this._townsRepository.find();
+    return await this._townsRepository.find({
+      order: {
+        nomCommune: 'ASC',
+      },
+      take: 100,
+    });
   }
 
   async findOne(id: number) {
